@@ -181,7 +181,7 @@ userService.getFavorites(userId) // <1>
            .subscribe(uiList::show, UiUtils::errorPopup); // <6>
 ----
 <1> We start with a flow of favorite IDs.
-<2> We _asynchronously transform_ these into detailed `Favorite` objects
+<2> We _asynchronously transform_ these IDs into detailed `Favorite` objects
 (`flatMap`). We now have a flow of `Favorite`.
 <3> If the flow of `Favorite` is empty, we switch to a fallback through the
 `suggestionService`.
@@ -336,17 +336,17 @@ emission is too high_
 === Composability and Readability
 
 By "`composability`", we mean the ability to orchestrate multiple asynchronous tasks, in
-which we use results from previous tasks to feed input to subsequent ones.
+which we use results from previous tasks to feed as inputs into subsequent ones.
 Alternatively, we can run several tasks in a fork-join style.
 In addition, we can reuse asynchronous tasks as discrete components in a
 higher-level system.
 
 The ability to orchestrate tasks is tightly coupled to the readability and
 maintainability of code. As the layers of asynchronous processes increase in both number
-and complexity, being able to compose and read code becomes increasingly difficult. As we
+and complexity, being able to compose and read code become increasingly difficult. As we
 saw, the callback model is simple, but one of its main drawbacks is that, for complex
 processes, you need to have a callback executed from a callback, itself nested inside
-another callback, and so on. That mess is known as "`Callback Hell`". As you can guess (or
+another callback, and so on. That mess is known as "`Callback Hell`." As you can guess (or
 know from experience), such code is pretty hard to go back to and reason about.
 
 Reactor offers rich composition options, wherein code mirrors the organization of the
@@ -356,13 +356,13 @@ minimized).
 === The Assembly Line Analogy
 
 You can think of data processed by a reactive application as moving through an assembly
-line. Reactor is both the conveyor belt and the workstations. The raw material pours from
+line. Reactor is both the conveyor belt and the workstations. The raw material starts from
 a source (the original `Publisher`) and ends up as a finished product ready to be pushed
 to the consumer (or `Subscriber`).
 
 The raw material can go through various transformations and other intermediary steps or
 be part of a larger assembly line that aggregates intermediate pieces together. If there
-is a glitch or clogging at one point (perhaps boxing the products takes a
+is a glitch or bottleneck at one point (perhaps boxing the products takes a
 disproportionately long time), the afflicted workstation can signal upstream to limit the
 flow of raw material.
 
